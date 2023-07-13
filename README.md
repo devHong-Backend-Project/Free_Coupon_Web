@@ -6,6 +6,16 @@
 
 <br>
 
+## *Tech Stack*
+***
++ #### SpringBoot
++ #### Elasticsearch 
++ #### Mysql 
++ #### Redis
++ #### Java11
+
+<br>
+
 ## *API 기능*
 ***
 
@@ -51,10 +61,4 @@
 <br>
 
 
-## *사용 기술 스택*
-***
-+ SpringBoot
-+ elasticsearch 
-+ mysql 
-+ redis
-+ java11
+
