@@ -61,11 +61,11 @@
 ***
 ![free_coupon-entity의 복사본](https://github.com/devhongsa/Free_Coupon/assets/100022877/dbe7e10e-2b93-4ed3-a653-2f1213aefdb4)
 
-User : 일반 유저 테이블 
-Partner : 파트너 유저 테이블 
-Coupon_Template : 파트너의 쿠폰템플릿 테이블. 파트너가 쿠폰 템플릿을 만들어놓으면 템플릿을 사용해서 쿠폰 재등록시 편의성을 제공 
-Coupon_Feed : 파트너가 쿠폰을 등록하면, 응모가능 쿠폰 목록에 등록되게 됨. Elasticsearch 사용 ( 쿠폰 검색기능을 위함 )
-Coupon_Qr : 쿠폰 추첨이 완료되면 QR쿠폰이 생성되고 당첨된 유저의 쿠폰당첨목록에 쿠폰정보가 보여지게 됨.
+- User : 일반 유저 테이블 
+- Partner : 파트너 유저 테이블 
+- Coupon_Template : 파트너의 쿠폰템플릿 테이블. 파트너가 쿠폰 템플릿을 만들어놓으면 템플릿을 사용해서 쿠폰 재등록시 편의성을 제공 
+- Coupon_Feed : 파트너가 쿠폰을 등록하면, 응모가능 쿠폰 목록에 등록되게 됨. Elasticsearch 사용 ( 쿠폰 검색기능을 위함 )
+- Coupon_Qr : 쿠폰 추첨이 완료되면 QR쿠폰이 생성되고 당첨된 유저의 쿠폰당첨목록에 쿠폰정보가 보여지게 됨.
 
 <br>
 
