@@ -55,7 +55,7 @@
 
 ## *ERD*
 ***
-![free_coupon-entity (2)](https://github.com/devhongsa/Free_Coupon/assets/100022877/3b9b06e5-5cb1-4920-b356-19afedc07392)
+![free_coupon-entity의 복사본](https://github.com/devhongsa/Free_Coupon/assets/100022877/dbe7e10e-2b93-4ed3-a653-2f1213aefdb4)
 
 
 <br>
