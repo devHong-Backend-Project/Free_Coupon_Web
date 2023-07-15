@@ -9,6 +9,7 @@
 ## *Tech Stack*
 ***
 + #### SpringBoot
++ #### Spring Security
 + #### Elasticsearch 
 + #### Mysql 
 + #### Redis
