@@ -16,11 +16,11 @@ public class Auth {
     @Data
     public static class SignIn {
         @NotBlank
-        protected String name;
+        private String name;
         @NotBlank
-        protected String password;
+        private String password;
         @NotBlank
-        protected String userType;
+        private String userType;
     }
 
     /*
@@ -29,11 +29,11 @@ public class Auth {
     @Data
     public static class SignUpUser {
         @NotBlank
-        protected String name;
+        private String name;
         @NotBlank
-        protected String password;
+        private String password;
         @NotEmpty
-        protected List<String> roles;
+        private List<String> roles;
         @NotBlank
         private String email;
         @NotBlank
@@ -56,11 +56,11 @@ public class Auth {
     @Data
     public static class SignUpPartner {
         @NotBlank
-        protected String name;
+        private String name;
         @NotBlank
-        protected String password;
+        private String password;
         @NotEmpty
-        protected List<String> roles;
+        private List<String> roles;
         @NotBlank
         private String businessNumber;
         @NotBlank

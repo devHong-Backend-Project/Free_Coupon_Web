@@ -12,6 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(indexes = @Index(name = "partner_idx", columnList = "partner_id"))
 public class CouponTemplate extends BaseEntity {
 
     @Id
@@ -25,14 +26,14 @@ public class CouponTemplate extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    private String coupon_name;
+    private String couponName;
 
-    private Long coupon_value;
+    private Long couponValue;
 
-    private Long expired_period;
+    private Long expiredPeriod;
 
     private String description;
 
-    private String img_url;
+    private String imgUrl;
 
 }
