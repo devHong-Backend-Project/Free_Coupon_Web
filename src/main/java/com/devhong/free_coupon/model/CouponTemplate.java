@@ -32,6 +32,7 @@ public class CouponTemplate extends BaseEntity {
 
     private Long expiredPeriod;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String imgUrl;

@@ -23,6 +23,13 @@ public class Auth {
         private String userType;
     }
 
+    @AllArgsConstructor
+    public static class SignInResponse {
+        public String status;
+        public String message;
+        public String token;
+    }
+
     /*
      * 일반회원 가입시 클라이언트 request Dto
      */
@@ -77,4 +84,9 @@ public class Auth {
         }
     }
 
+    @AllArgsConstructor
+    public static class SignUpResponse {
+        public String status;
+        public String message;
+    }
 }

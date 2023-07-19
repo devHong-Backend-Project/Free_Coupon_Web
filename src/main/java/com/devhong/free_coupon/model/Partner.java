@@ -32,7 +32,7 @@ public class Partner extends BaseEntity implements UserDetails, Client {
 
     private String location;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "partner_roles",joinColumns = @JoinColumn(name= "partner_id", referencedColumnName = "id"))
     private List<String> roles;
 

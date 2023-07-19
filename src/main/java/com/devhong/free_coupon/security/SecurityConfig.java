@@ -29,26 +29,24 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter authenticationFilter;
 
     @Bean
-    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic().disable()
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http    .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                .antMatchers("/**/signup", "/**/signin").permitAll()
-                .and()
+                .authorizeHttpRequests((authz) -> authz
+                        .antMatchers("/**/signin", "/**/signup/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 //.antMatchers("/ignore1", "/ignore2")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-
     }
 
 

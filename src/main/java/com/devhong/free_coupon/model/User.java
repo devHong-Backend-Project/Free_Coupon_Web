@@ -33,7 +33,7 @@ public class User extends BaseEntity implements UserDetails, Client {
     @Column(length = 11)
     private String mobileNumber;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles",joinColumns = @JoinColumn(name= "user_id", referencedColumnName = "id"))
     private List<String> roles;
 

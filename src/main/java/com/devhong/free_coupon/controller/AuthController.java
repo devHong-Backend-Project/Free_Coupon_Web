@@ -6,6 +6,7 @@ import com.devhong.free_coupon.model.Partner;
 import com.devhong.free_coupon.model.User;
 import com.devhong.free_coupon.security.TokenProvider;
 import com.devhong.free_coupon.service.AuthService;
+import com.devhong.free_coupon.type.ResponseMsg;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -38,14 +39,14 @@ public class AuthController {
     public ResponseEntity<?> singUpUser(@RequestBody @Valid Auth.SignUpUser request){
         User user = authService.register(request);
         log.info("user signup -> " + user.getName());
-        return ResponseEntity.ok("User Signup Success");
+        return ResponseEntity.ok(new Auth.SignUpResponse("success",ResponseMsg.SIGNUP_SUCCESS.getMessage()));
     }
 
     @PostMapping("/signup/partner")
     public ResponseEntity<?> singUpPartner(@RequestBody @Valid Auth.SignUpPartner request){
         Partner partner = authService.register(request);
         log.info("partner signup -> " + partner.getName());
-        return ResponseEntity.ok("Partner Signup Success");
+        return ResponseEntity.ok(new Auth.SignUpResponse("success",ResponseMsg.SIGNUP_SUCCESS.getMessage()));
     }
 
 
@@ -60,7 +61,7 @@ public class AuthController {
         Client client = authService.authenticate(request);
         String token = tokenProvider.generateToken(client.getName(), request.getUserType());
         log.info("user login -> " + client.getName());
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(new Auth.SignInResponse("success",ResponseMsg.SIGNIN_SUCCESS.getMessage(), token));
     }
 
 
