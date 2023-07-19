@@ -4,10 +4,12 @@ import com.devhong.free_coupon.model.CouponTemplate;
 import com.devhong.free_coupon.model.Partner;
 import com.devhong.free_coupon.type.Category;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class TemplateDto {
 
@@ -39,9 +41,35 @@ public class TemplateDto {
         }
     }
 
+    @Data
     @AllArgsConstructor
     public static class Response {
-        public String status;
-        public String message;
+        private String status;
+        private String message;
+        private List<?> data;
+    }
+
+    @Builder
+    @Data
+    public static class TemplateResponse {
+        private Long template_id;
+        private String category;
+        private String couponName;
+        private Long couponValue;
+        private Long expiredPeriod;
+        private String description;
+        private String imgUrl;
+
+        public static TemplateResponse fromEntity(CouponTemplate couponTemplate) {
+            return TemplateResponse.builder()
+                    .template_id(couponTemplate.getId())
+                    .category(couponTemplate.getCategory().getCategory())
+                    .couponName(couponTemplate.getCouponName())
+                    .couponValue(couponTemplate.getCouponValue())
+                    .expiredPeriod(couponTemplate.getExpiredPeriod())
+                    .description(couponTemplate.getDescription())
+                    .imgUrl(couponTemplate.getImgUrl())
+                    .build();
+        }
     }
 }

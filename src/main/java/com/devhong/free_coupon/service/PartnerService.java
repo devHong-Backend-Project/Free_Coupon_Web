@@ -13,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -53,5 +56,15 @@ public class PartnerService {
 
         return couponTemplate.getPartner();
 
+    }
+
+    public List<TemplateDto.TemplateResponse> getTemplates(String token) {
+        String name = getNameFromToken(token);
+        Partner partner = partnerRepository.findByName(name)
+                .orElseThrow(()-> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+
+        List<CouponTemplate> templates = partnerRepository.findTemplatesByPartnerId(partner.getId());
+
+        return templates.stream().map(TemplateDto.TemplateResponse::fromEntity).collect(Collectors.toList());
     }
 }

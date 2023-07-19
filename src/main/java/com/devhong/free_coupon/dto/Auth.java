@@ -23,11 +23,12 @@ public class Auth {
         private String userType;
     }
 
+    @Data
     @AllArgsConstructor
     public static class SignInResponse {
-        public String status;
-        public String message;
-        public String token;
+        private String status;
+        private String message;
+        private String token;
     }
 
     /*
@@ -84,9 +85,10 @@ public class Auth {
         }
     }
 
+    @Data
     @AllArgsConstructor
     public static class SignUpResponse {
-        public String status;
-        public String message;
+        private String status;
+        private String message;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,37 +26,47 @@ public class PartnerController {
     /*
         쿠폰 템플릿 추가하기
      */
-    @PostMapping("/template/create")
+    @PostMapping("/template")
     public ResponseEntity<?> addTemplate(@RequestBody @Valid TemplateDto.Request request,
                                          @RequestHeader("Authorization") String token) {
         CouponTemplate couponTemplate = partnerService.addTemplate(request, token);
 
         log.info("partner_id " + couponTemplate.getId().toString() + " : Add Template");
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.ADD_TEMPLATE_SUCCESS.getMessage()));
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.ADD_TEMPLATE_SUCCESS.getMessage(),null));
     }
 
 
     /*
         쿠폰 템플릿 수정하기
      */
-    @PostMapping("/template/update/{template_id}")
+    @PutMapping("/template/{template_id}")
     public ResponseEntity<?> updateTemplate(@RequestBody @Valid TemplateDto.Request request,
                                             @PathVariable Long template_id){
         CouponTemplate couponTemplate = partnerService.updateTemplate(template_id, request);
 
         log.info("partner_id " + couponTemplate.getId().toString() + " : Update Template");
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.UPDATE_TEMPLATE_SUCCESS.getMessage()));
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.UPDATE_TEMPLATE_SUCCESS.getMessage(),null));
     }
 
 
     /*
         쿠폰 템플릿 삭제하기
      */
-    @PostMapping("/template/delete/{template_id}")
+    @DeleteMapping("/template/{template_id}")
     public ResponseEntity<?> deleteTemplate(@PathVariable Long template_id) {
         Partner partner = partnerService.deleteTemplate(template_id);
 
         log.info("partner_id " + partner.getId().toString() + " : Delete Template");
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.DELETE_TEMPLATE_SUCCESS.getMessage()));
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.DELETE_TEMPLATE_SUCCESS.getMessage(),null));
+    }
+
+
+    /*
+        쿠폰 템플릿 목록 보기
+     */
+    @GetMapping("/template/list")
+    public ResponseEntity<?> getTemplates(@RequestHeader("Authorization") String token) {
+        List<TemplateDto.TemplateResponse> templates = partnerService.getTemplates(token);
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.GET_TEMPLATE_LIST.getMessage(), templates));
     }
 }
