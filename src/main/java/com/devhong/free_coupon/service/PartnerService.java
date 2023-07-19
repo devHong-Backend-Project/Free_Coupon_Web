@@ -24,7 +24,6 @@ public class PartnerService {
 
     public CouponTemplate addTemplate(TemplateDto.Request request, String token) {
         String name = getNameFromToken(token);
-        log.info(name);
         Partner partner = partnerRepository.findByName(name)
                 .orElseThrow(()-> new CustomException(CustomErrorCode.USER_NOT_FOUND));
 
@@ -43,5 +42,16 @@ public class PartnerService {
         couponTemplate.updateEntity(request);
 
         return couponTemplate;
+    }
+
+    @Transactional
+    public Partner deleteTemplate(Long templateId) {
+        CouponTemplate couponTemplate = couponTemplateRepository.findById(templateId)
+                .orElseThrow(()->new CustomException(CustomErrorCode.TEMPLATE_NOT_FOUND));
+
+        couponTemplateRepository.deleteById(templateId);
+
+        return couponTemplate.getPartner();
+
     }
 }
