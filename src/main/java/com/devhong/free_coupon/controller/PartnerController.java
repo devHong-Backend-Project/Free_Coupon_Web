@@ -21,11 +21,21 @@ public class PartnerController {
 
     private final PartnerService partnerService;
 
-    @PostMapping("/template")
-    public ResponseEntity<?> addTemplate(@RequestBody @Valid TemplateDto.AddRequest request, @RequestHeader("Authorization") String token) {
-        log.info(token);
+    @PostMapping("/template/create")
+    public ResponseEntity<?> addTemplate(@RequestBody @Valid TemplateDto.Request request,
+                                         @RequestHeader("Authorization") String token) {
         CouponTemplate couponTemplate = partnerService.addTemplate(request, token);
         log.info("partner_id " + couponTemplate.getId().toString() + " : Add Template");
-        return ResponseEntity.ok(new TemplateDto.AddResponse("success", ResponseMsg.ADD_TEMPLATE_SUCCESS.getMessage()));
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.ADD_TEMPLATE_SUCCESS.getMessage()));
+    }
+
+
+    @PostMapping("/template/update/{template_id}")
+    public ResponseEntity<?> updateTemplate(@RequestBody @Valid TemplateDto.Request request,
+                                            @PathVariable Long template_id){
+        CouponTemplate couponTemplate = partnerService.updateTemplate(template_id, request);
+
+        log.info("partner_id " + couponTemplate.getId().toString() + " : Update Template");
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.UPDATE_TEMPLATE_SUCCESS.getMessage()));
     }
 }

@@ -1,5 +1,6 @@
 package com.devhong.free_coupon.model;
 
+import com.devhong.free_coupon.dto.TemplateDto;
 import com.devhong.free_coupon.type.Category;
 
 import javax.persistence.*;
@@ -36,5 +37,11 @@ public class CouponTemplate extends BaseEntity {
     private String description;
 
     private String imgUrl;
+
+    public void updateEntity(TemplateDto.Request request){
+        expiredPeriod = request.getExpiredPeriod();
+        description = request.getDescription();
+        imgUrl = request.getImgUrl();
+    }
 
 }

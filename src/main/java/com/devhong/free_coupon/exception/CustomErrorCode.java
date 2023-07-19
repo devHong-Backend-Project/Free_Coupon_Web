@@ -17,7 +17,8 @@ public enum CustomErrorCode {
     ACCESS_DENIED(HttpStatus.FORBIDDEN, "요청 접근 권한이 없습니다."),
     MOBILE_NUMBER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "이미 등록된 휴대폰번호입니다."),
     BUSINESS_NUMBER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "이미 등록된 사업자번호입니다."),
-    CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "존재하지않는 카테고리 이름입니다.");
+    CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "존재하지않는 카테고리 이름입니다."),
+    TEMPLATE_NOT_FOUND(HttpStatus.BAD_REQUEST, "존재하지않는 템플릿 입니다.");
 
     private final HttpStatus httpStatus;
     private final String errorMessage;

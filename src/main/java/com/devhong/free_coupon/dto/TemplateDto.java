@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class TemplateDto {
 
     @Data
-    public static class AddRequest {
+    public static class Request {
         @NotBlank
         private String category;
         @NotBlank
@@ -40,7 +40,7 @@ public class TemplateDto {
     }
 
     @AllArgsConstructor
-    public static class AddResponse {
+    public static class Response {
         public String status;
         public String message;
     }
