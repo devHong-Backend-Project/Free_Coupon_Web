@@ -1,6 +1,7 @@
 package com.devhong.free_coupon.controller;
 
 import com.devhong.free_coupon.dto.TemplateDto;
+import com.devhong.free_coupon.model.CouponFeed;
 import com.devhong.free_coupon.model.CouponTemplate;
 import com.devhong.free_coupon.model.Partner;
 import com.devhong.free_coupon.service.PartnerService;
@@ -31,21 +32,24 @@ public class PartnerController {
                                          @RequestHeader("Authorization") String token) {
         CouponTemplate couponTemplate = partnerService.addTemplate(request, token);
 
-        log.info("partner_id " + couponTemplate.getId().toString() + " : Add Template");
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.ADD_TEMPLATE_SUCCESS.getMessage(),null));
+        log.info(String.format("partner_id_%d add template",
+                couponTemplate.getPartner().getId()));
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.ADD_TEMPLATE_SUCCESS.getMessage()));
     }
 
 
     /*
         쿠폰 템플릿 수정하기
+        - 클라이언트로부터 template_id 와 수정할 template 정보를 입력받아 업데이트 수행
      */
     @PutMapping("/template/{template_id}")
     public ResponseEntity<?> updateTemplate(@RequestBody @Valid TemplateDto.Request request,
                                             @PathVariable Long template_id){
         CouponTemplate couponTemplate = partnerService.updateTemplate(template_id, request);
 
-        log.info("partner_id " + couponTemplate.getId().toString() + " : Update Template");
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.UPDATE_TEMPLATE_SUCCESS.getMessage(),null));
+        log.info(String.format("partner_id_%d update template",
+                couponTemplate.getPartner().getId()));
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.UPDATE_TEMPLATE_SUCCESS.getMessage()));
     }
 
 
@@ -56,17 +60,32 @@ public class PartnerController {
     public ResponseEntity<?> deleteTemplate(@PathVariable Long template_id) {
         Partner partner = partnerService.deleteTemplate(template_id);
 
-        log.info("partner_id " + partner.getId().toString() + " : Delete Template");
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.DELETE_TEMPLATE_SUCCESS.getMessage(),null));
+        log.info(String.format("partner_id_%d delete template",
+                partner.getId()));
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.DELETE_TEMPLATE_SUCCESS.getMessage()));
     }
 
 
     /*
         쿠폰 템플릿 목록 보기
+        - 헤더에 있는 jwt 토큰을 가져와서 해당 유저가 만든 쿠폰 템플릿 목록을 보여준다.
      */
     @GetMapping("/template/list")
     public ResponseEntity<?> getTemplates(@RequestHeader("Authorization") String token) {
         List<TemplateDto.TemplateResponse> templates = partnerService.getTemplates(token);
         return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.GET_TEMPLATE_LIST.getMessage(), templates));
     }
+
+
+    /*
+        쿠폰 등록하기
+     */
+    @PostMapping("/register-coupon/{template_id}")
+    public ResponseEntity<?> registerCoupon(@PathVariable Long template_id ,@RequestParam("amount") Long amount) {
+        CouponFeed couponFeed = partnerService.registerCoupon(template_id, amount);
+        log.info(String.format("partner_id_%d register coupon(feed_id_%d)",
+                couponFeed.getPartner_id(), couponFeed.getId()));
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.REGISTER_COUPON_SUCCESS.getMessage()));
+    }
+
 }

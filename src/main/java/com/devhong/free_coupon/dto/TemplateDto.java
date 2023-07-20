@@ -9,6 +9,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TemplateDto {
@@ -47,6 +48,12 @@ public class TemplateDto {
         private String status;
         private String message;
         private List<?> data;
+
+        public Response(String status, String message){
+            this.status = status;
+            this.message = message;
+            this.data = new ArrayList<>();
+        }
     }
 
     @Builder

@@ -12,7 +12,8 @@ public enum ResponseMsg {
     SIGNUP_SUCCESS("회원가입이 완료되었습니다.", HttpStatus.OK),
     UPDATE_TEMPLATE_SUCCESS("템플릿을 수정하였습니다.", HttpStatus.OK),
     DELETE_TEMPLATE_SUCCESS("템플릿을 삭제하였습니다.", HttpStatus.OK),
-    GET_TEMPLATE_LIST("템플릿 목록 조회", HttpStatus.OK);
+    GET_TEMPLATE_LIST("템플릿 목록 조회", HttpStatus.OK),
+    REGISTER_COUPON_SUCCESS("쿠폰을 등록하였습니다.", HttpStatus.OK);
 
     private final String message;
     private final HttpStatus httpStatus;

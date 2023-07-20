@@ -44,4 +44,17 @@ public class CouponTemplate extends BaseEntity {
         imgUrl = request.getImgUrl();
     }
 
+    public CouponFeed toFeedEntity(Long amount) {
+        return CouponFeed.builder()
+                .partner_id(partner.getId())
+                .category(category)
+                .couponName(couponName)
+                .couponValue(couponValue)
+                .expiredPeriod(expiredPeriod)
+                .description(description)
+                .imgUrl(imgUrl)
+                .amount(amount)
+                .build();
+    }
+
 }

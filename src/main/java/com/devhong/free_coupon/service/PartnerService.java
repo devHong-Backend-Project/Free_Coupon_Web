@@ -3,8 +3,10 @@ package com.devhong.free_coupon.service;
 import com.devhong.free_coupon.dto.TemplateDto;
 import com.devhong.free_coupon.exception.CustomErrorCode;
 import com.devhong.free_coupon.exception.CustomException;
+import com.devhong.free_coupon.model.CouponFeed;
 import com.devhong.free_coupon.model.CouponTemplate;
 import com.devhong.free_coupon.model.Partner;
+import com.devhong.free_coupon.repository.CouponFeedRepository;
 import com.devhong.free_coupon.repository.CouponTemplateRepository;
 import com.devhong.free_coupon.repository.PartnerRepository;
 import com.devhong.free_coupon.security.TokenProvider;
@@ -23,6 +25,7 @@ public class PartnerService {
 
     private final CouponTemplateRepository couponTemplateRepository;
     private final PartnerRepository partnerRepository;
+    private final CouponFeedRepository couponFeedRepository;
     private final TokenProvider tokenProvider;
 
     public CouponTemplate addTemplate(TemplateDto.Request request, String token) {
@@ -55,7 +58,6 @@ public class PartnerService {
         couponTemplateRepository.deleteById(templateId);
 
         return couponTemplate.getPartner();
-
     }
 
     public List<TemplateDto.TemplateResponse> getTemplates(String token) {
@@ -66,5 +68,12 @@ public class PartnerService {
         List<CouponTemplate> templates = partnerRepository.findTemplatesByPartnerId(partner.getId());
 
         return templates.stream().map(TemplateDto.TemplateResponse::fromEntity).collect(Collectors.toList());
+    }
+
+    public CouponFeed registerCoupon(Long templateId, Long amount) {
+        CouponTemplate couponTemplate = couponTemplateRepository.findById(templateId)
+                .orElseThrow(()->new CustomException(CustomErrorCode.TEMPLATE_NOT_FOUND));
+
+        return couponFeedRepository.save(couponTemplate.toFeedEntity(amount));
     }
 }
