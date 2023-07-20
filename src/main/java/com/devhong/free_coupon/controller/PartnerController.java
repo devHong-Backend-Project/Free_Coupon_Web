@@ -29,8 +29,8 @@ public class PartnerController {
      */
     @PostMapping("/template")
     public ResponseEntity<?> addTemplate(@RequestBody @Valid TemplateDto.Request request,
-                                         @RequestHeader("Authorization") String token) {
-        CouponTemplate couponTemplate = partnerService.addTemplate(request, token);
+                                         @RequestHeader("Authorization") String jwtHeader) {
+        CouponTemplate couponTemplate = partnerService.addTemplate(request, jwtHeader);
 
         log.info(String.format("partner_id_%d add template",
                 couponTemplate.getPartner().getId()));
@@ -44,8 +44,9 @@ public class PartnerController {
      */
     @PutMapping("/template/{template_id}")
     public ResponseEntity<?> updateTemplate(@RequestBody @Valid TemplateDto.Request request,
-                                            @PathVariable Long template_id){
-        CouponTemplate couponTemplate = partnerService.updateTemplate(template_id, request);
+                                            @PathVariable Long template_id,
+                                            @RequestHeader("Authorization") String jwtHeader){
+        CouponTemplate couponTemplate = partnerService.updateTemplate(jwtHeader, template_id, request);
 
         log.info(String.format("partner_id_%d update template",
                 couponTemplate.getPartner().getId()));
@@ -57,8 +58,9 @@ public class PartnerController {
         쿠폰 템플릿 삭제하기
      */
     @DeleteMapping("/template/{template_id}")
-    public ResponseEntity<?> deleteTemplate(@PathVariable Long template_id) {
-        Partner partner = partnerService.deleteTemplate(template_id);
+    public ResponseEntity<?> deleteTemplate(@PathVariable Long template_id,
+                                            @RequestHeader("Authorization") String jwtHeader) {
+        Partner partner = partnerService.deleteTemplate(jwtHeader, template_id);
 
         log.info(String.format("partner_id_%d delete template",
                 partner.getId()));
@@ -71,8 +73,8 @@ public class PartnerController {
         - 헤더에 있는 jwt 토큰을 가져와서 해당 유저가 만든 쿠폰 템플릿 목록을 보여준다.
      */
     @GetMapping("/template/list")
-    public ResponseEntity<?> getTemplates(@RequestHeader("Authorization") String token) {
-        List<TemplateDto.TemplateResponse> templates = partnerService.getTemplates(token);
+    public ResponseEntity<?> getTemplates(@RequestHeader("Authorization") String jwtHeader) {
+        List<TemplateDto.TemplateResponse> templates = partnerService.getTemplates(jwtHeader);
         return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.GET_TEMPLATE_LIST.getMessage(), templates));
     }
 
@@ -81,8 +83,8 @@ public class PartnerController {
         쿠폰 등록하기
      */
     @PostMapping("/register-coupon/{template_id}")
-    public ResponseEntity<?> registerCoupon(@PathVariable Long template_id ,@RequestParam("amount") Long amount) {
-        CouponFeed couponFeed = partnerService.registerCoupon(template_id, amount);
+    public ResponseEntity<?> registerCoupon(@PathVariable Long template_id ,@RequestParam("amount") Long amount, @RequestHeader("Authorization") String jwtHeader) {
+        CouponFeed couponFeed = partnerService.registerCoupon(jwtHeader, template_id, amount);
         log.info(String.format("partner_id_%d register coupon(feed_id_%d)",
                 couponFeed.getPartner_id(), couponFeed.getId()));
         return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.REGISTER_COUPON_SUCCESS.getMessage()));

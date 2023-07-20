@@ -59,7 +59,7 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> signIn(@RequestBody @Valid Auth.SignIn request) {
         Client client = authService.authenticate(request);
-        String token = tokenProvider.generateToken(client.getName(), request.getUserType());
+        String token = tokenProvider.generateToken(client.getId(), client.getName(), request.getUserType());
         log.info("user login -> " + client.getName());
         return ResponseEntity.ok(new Auth.SignInResponse("success",ResponseMsg.SIGNIN_SUCCESS.getMessage(), token));
     }

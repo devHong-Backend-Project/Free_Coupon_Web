@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -23,8 +24,13 @@ public class TokenProvider {
     @Value("${spring.jwt.secret}")
     private String secretKey;
 
-    public String generateToken(String username, String userType) {
+    @Value("${spring.jwt.token-prefix}")
+    private String tokenPrefix;
+
+    public String generateToken(Long id, String username, String userType) {
         Claims claims = Jwts.claims().setSubject(username + "_" + userType);
+        claims.put("id", id);
+        claims.put("type", userType);
 
         Date now = new Date();
         Date expiredDate = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
@@ -38,13 +44,23 @@ public class TokenProvider {
     }
 
     public Authentication getAuthentication(String jwt) {
-        UserDetails userDetails = authService.loadUserByUsername(this.getUsername(jwt));
+        UserDetails userDetails = authService.loadUserByUsername(this.getUserNameAndType(jwt));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String getUsername(String token) {
+    public String getUserNameAndType(String token) {
         return parseClaims(token).getSubject();
     }
+
+    public String getUserName(String token) {
+        return parseClaims(token).getSubject().split("_")[0];
+    }
+
+    public String getUserType(String token) {
+        return parseClaims(token).getSubject().split("_")[1];
+    }
+
+    public Long getUserId(String token) { return parseClaims(token).get("id",Long.class); }
 
     public boolean validateToken(String token) {
         if (!StringUtils.hasText(token)) return false; //빈문자열인지 체크
@@ -59,5 +75,12 @@ public class TokenProvider {
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
+    }
+
+    public String resolveTokenFromHeader(String header) {
+        if (!ObjectUtils.isEmpty(header) && header.startsWith(tokenPrefix)) {
+            return header.substring(tokenPrefix.length());
+        }
+        return null;
     }
 }

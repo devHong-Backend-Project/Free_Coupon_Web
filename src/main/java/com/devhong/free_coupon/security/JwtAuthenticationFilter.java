@@ -2,10 +2,10 @@ package com.devhong.free_coupon.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -19,9 +19,8 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter { //OncePerRequestFilter는 요청이 올때마다 이 필터가 실행됨.
-
-    private static final String TOKEN_HEADER = "Authorization";
-    private static final String TOKEN_PREFIX = "Bearer ";
+    @Value("${spring.jwt.token-header}")
+    private String TOKEN_HEADER;
 
     private final TokenProvider tokenProvider;
 
@@ -36,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { //OncePerReq
             Authentication auth = tokenProvider.getAuthentication(token); // 사용자와 사용자권한정보가 포함된 인증토큰 리턴
             SecurityContextHolder.getContext().setAuthentication(auth);
 
-            log.info(String.format("[%s] -> %s",tokenProvider.getUsername(token) , request.getRequestURI()));
+            log.info(String.format("[%s] -> %s",tokenProvider.getUserNameAndType(token), request.getRequestURI()));
         }
 
         filterChain.doFilter(request, response);
@@ -46,12 +45,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { //OncePerReq
         헤더에서 jwt토큰을 추출하는 메서드
      */
     private String resolveTokenFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(TOKEN_HEADER);
-
-        if (!ObjectUtils.isEmpty(token) && token.startsWith(TOKEN_PREFIX)) {
-            return token.substring(TOKEN_PREFIX.length());
-        }
-
-        return null;
+        return tokenProvider.resolveTokenFromHeader(request.getHeader(TOKEN_HEADER));
     }
 }
