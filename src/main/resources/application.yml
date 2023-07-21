@@ -18,3 +18,5 @@ spring:
 
   jwt:
     secret: bXlmcmVlY291cG9uCg==
+    token-header: "Authorization"
+    token-prefix: "Bearer "

@@ -1,6 +1,5 @@
 package com.devhong.free_coupon.repository;
 
-import com.devhong.free_coupon.model.Partner;
 import com.devhong.free_coupon.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +11,10 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
     @Query("select u from User u join fetch u.roles where u.name = :name")
-    Optional<Partner> findByName(@Param("name") String name);
+    Optional<User> findByName(@Param("name") String name);
+
+    @Query("select u from User u join fetch u.roles where u.id = :id")
+    Optional<User> findById(@Param("id") Long id);
 
     boolean existsByName(String name);
 

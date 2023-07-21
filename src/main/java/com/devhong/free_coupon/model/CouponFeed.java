@@ -3,6 +3,7 @@ package com.devhong.free_coupon.model;
 import com.devhong.free_coupon.type.Category;
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -34,7 +35,7 @@ public class CouponFeed extends BaseEntity {
 
     private Long amount;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "coupon_participants",joinColumns = @JoinColumn(name= "feed_id", referencedColumnName = "id"))
-    private List<Long> participants;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "feedId")
+    private List<FeedParticipants> participants = new ArrayList<>();
 }

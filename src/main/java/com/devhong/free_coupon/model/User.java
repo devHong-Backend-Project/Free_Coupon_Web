@@ -73,4 +73,8 @@ public class User extends BaseEntity implements UserDetails, Client {
     public boolean isEnabled() {
         return false;
     }
+
+    public void useTicket() {
+        ticketAmount -= 1;
+    }
 }

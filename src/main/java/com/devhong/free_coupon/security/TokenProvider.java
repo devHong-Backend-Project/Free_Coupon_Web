@@ -56,11 +56,19 @@ public class TokenProvider {
         return parseClaims(token).getSubject().split("_")[0];
     }
 
+    public String getNameFromHeader(String header) {
+        return this.getUserName(this.resolveTokenFromHeader(header));
+    }
+
     public String getUserType(String token) {
         return parseClaims(token).getSubject().split("_")[1];
     }
 
     public Long getUserId(String token) { return parseClaims(token).get("id",Long.class); }
+
+    public Long getUserIdFromHeader(String header) {
+        return this.getUserId(this.resolveTokenFromHeader(header));
+    }
 
     public boolean validateToken(String token) {
         if (!StringUtils.hasText(token)) return false; //빈문자열인지 체크
