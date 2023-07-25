@@ -21,9 +21,9 @@ public class TemplateDto {
         @NotBlank
         private String couponName;
         @NotNull
-        private Long couponValue;
+        private Integer couponValue;
         @NotNull
-        private Long expiredPeriod;
+        private Integer expiredPeriod;
         @NotBlank
         private String description;
         @NotBlank
@@ -62,8 +62,8 @@ public class TemplateDto {
         private Long template_id;
         private String category;
         private String couponName;
-        private Long couponValue;
-        private Long expiredPeriod;
+        private Integer couponValue;
+        private Integer expiredPeriod;
         private String description;
         private String imgUrl;
 

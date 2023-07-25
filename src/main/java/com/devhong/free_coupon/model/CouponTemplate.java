@@ -29,9 +29,9 @@ public class CouponTemplate extends BaseEntity {
 
     private String couponName;
 
-    private Long couponValue;
+    private Integer couponValue;
 
-    private Long expiredPeriod;
+    private Integer expiredPeriod;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -44,9 +44,9 @@ public class CouponTemplate extends BaseEntity {
         imgUrl = request.getImgUrl();
     }
 
-    public CouponFeed toFeedEntity(Long amount) {
+    public CouponFeed toFeedEntity(Integer amount) {
         return CouponFeed.builder()
-                .partner_id(partner.getId())
+                .partnerId(partner.getId())
                 .category(category)
                 .couponName(couponName)
                 .couponValue(couponValue)

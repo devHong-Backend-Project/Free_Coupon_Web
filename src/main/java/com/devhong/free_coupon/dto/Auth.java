@@ -5,8 +5,6 @@ import com.devhong.free_coupon.model.User;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 public class Auth {
 
@@ -40,8 +38,6 @@ public class Auth {
         private String name;
         @NotBlank
         private String password;
-        @NotEmpty
-        private List<String> roles;
         @NotBlank
         private String email;
         @NotBlank
@@ -53,7 +49,6 @@ public class Auth {
                         .password(password)
                         .email(email)
                         .mobileNumber(mobileNumber)
-                        .roles(roles)
                         .build();
         }
     }
@@ -67,8 +62,6 @@ public class Auth {
         private String name;
         @NotBlank
         private String password;
-        @NotEmpty
-        private List<String> roles;
         @NotBlank
         private String businessNumber;
         @NotBlank
@@ -80,7 +73,6 @@ public class Auth {
                     .password(password)
                     .businessNumber(businessNumber)
                     .location(location)
-                    .roles(roles)
                     .build();
         }
     }

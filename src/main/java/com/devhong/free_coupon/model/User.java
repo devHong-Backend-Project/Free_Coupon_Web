@@ -1,13 +1,12 @@
 package com.devhong.free_coupon.model;
 
+import com.devhong.free_coupon.utils.Converter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import lombok.*;
@@ -33,14 +32,12 @@ public class User extends BaseEntity implements UserDetails, Client {
     @Column(length = 11)
     private String mobileNumber;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles",joinColumns = @JoinColumn(name= "user_id", referencedColumnName = "id"))
-    private List<String> roles;
+    @Convert(converter = Converter.RoleConverter.class)
+    @Builder.Default()
+    private Set<String> roles = Set.of("ROLE_USER");
 
-    private int ticketAmount = 0;
-
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    private List<QrCoupon> qrCoupons = new ArrayList<>();
+    @Builder.Default()
+    private Integer ticketAmount = 100;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

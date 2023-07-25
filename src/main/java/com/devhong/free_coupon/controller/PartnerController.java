@@ -83,10 +83,10 @@ public class PartnerController {
         쿠폰 등록하기
      */
     @PostMapping("/register-coupon/{template_id}")
-    public ResponseEntity<?> registerCoupon(@PathVariable Long template_id ,@RequestParam("amount") Long amount, @RequestHeader("Authorization") String jwtHeader) {
+    public ResponseEntity<?> registerCoupon(@PathVariable Long template_id ,@RequestParam("amount") Integer amount, @RequestHeader("Authorization") String jwtHeader) {
         CouponFeed couponFeed = partnerService.registerCoupon(jwtHeader, template_id, amount);
         log.info(String.format("partner_id_%d register coupon(feed_id_%d)",
-                couponFeed.getPartner_id(), couponFeed.getId()));
+                couponFeed.getPartnerId(), couponFeed.getId()));
         return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.REGISTER_COUPON_SUCCESS.getMessage()));
     }
 

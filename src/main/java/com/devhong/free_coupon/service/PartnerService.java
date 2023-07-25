@@ -77,7 +77,7 @@ public class PartnerService {
         return templates.stream().map(TemplateDto.TemplateResponse::fromEntity).collect(Collectors.toList());
     }
 
-    public CouponFeed registerCoupon(String header, Long templateId, Long amount) {
+    public CouponFeed registerCoupon(String header, Long templateId, Integer amount) {
         CouponTemplate couponTemplate = couponTemplateRepository.findById(templateId)
                 .orElseThrow(()->new CustomException(CustomErrorCode.TEMPLATE_NOT_FOUND));
 

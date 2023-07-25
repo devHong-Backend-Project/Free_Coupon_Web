@@ -3,8 +3,6 @@ package com.devhong.free_coupon.model;
 import com.devhong.free_coupon.type.Category;
 import lombok.*;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -17,25 +15,21 @@ public class CouponFeed extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long partner_id;
+    private Long partnerId;
 
     @Enumerated(EnumType.STRING)
     private Category category;
 
     private String couponName;
 
-    private Long couponValue;
+    private Integer couponValue;
 
-    private Long expiredPeriod;
+    private Integer expiredPeriod;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
     private String imgUrl;
 
-    private Long amount;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "feedId")
-    private List<FeedParticipants> participants = new ArrayList<>();
+    private Integer amount;
 }
