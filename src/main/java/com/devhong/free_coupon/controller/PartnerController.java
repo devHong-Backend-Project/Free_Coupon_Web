@@ -1,5 +1,6 @@
 package com.devhong.free_coupon.controller;
 
+import com.devhong.free_coupon.dto.BaseResponseDto;
 import com.devhong.free_coupon.dto.TemplateDto;
 import com.devhong.free_coupon.model.CouponFeed;
 import com.devhong.free_coupon.model.CouponTemplate;
@@ -34,7 +35,7 @@ public class PartnerController {
 
         log.info(String.format("partner_id_%d add template",
                 couponTemplate.getPartner().getId()));
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.ADD_TEMPLATE_SUCCESS.getMessage()));
+        return ResponseEntity.ok(new BaseResponseDto.BaseResponse("success", ResponseMsg.ADD_TEMPLATE_SUCCESS.getMessage()));
     }
 
 
@@ -50,7 +51,7 @@ public class PartnerController {
 
         log.info(String.format("partner_id_%d update template",
                 couponTemplate.getPartner().getId()));
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.UPDATE_TEMPLATE_SUCCESS.getMessage()));
+        return ResponseEntity.ok(new BaseResponseDto.BaseResponse("success", ResponseMsg.UPDATE_TEMPLATE_SUCCESS.getMessage()));
     }
 
 
@@ -64,7 +65,7 @@ public class PartnerController {
 
         log.info(String.format("partner_id_%d delete template",
                 partner.getId()));
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.DELETE_TEMPLATE_SUCCESS.getMessage()));
+        return ResponseEntity.ok(new BaseResponseDto.BaseResponse("success", ResponseMsg.DELETE_TEMPLATE_SUCCESS.getMessage()));
     }
 
 
@@ -75,7 +76,7 @@ public class PartnerController {
     @GetMapping("/template/list")
     public ResponseEntity<?> getTemplates(@RequestHeader("Authorization") String jwtHeader) {
         List<TemplateDto.TemplateResponse> templates = partnerService.getTemplates(jwtHeader);
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.GET_TEMPLATE_LIST.getMessage(), templates));
+        return ResponseEntity.ok(new BaseResponseDto.DataResponse("success", ResponseMsg.GET_TEMPLATE_LIST.getMessage(), templates));
     }
 
 
@@ -87,7 +88,7 @@ public class PartnerController {
         CouponFeed couponFeed = partnerService.registerCoupon(jwtHeader, template_id, amount);
         log.info(String.format("partner_id_%d register coupon(feed_id_%d)",
                 couponFeed.getPartnerId(), couponFeed.getId()));
-        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.REGISTER_COUPON_SUCCESS.getMessage()));
+        return ResponseEntity.ok(new BaseResponseDto.BaseResponse("success", ResponseMsg.REGISTER_COUPON_SUCCESS.getMessage()));
     }
 
 }

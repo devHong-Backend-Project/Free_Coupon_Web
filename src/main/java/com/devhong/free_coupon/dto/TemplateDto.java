@@ -3,14 +3,11 @@ package com.devhong.free_coupon.dto;
 import com.devhong.free_coupon.model.CouponTemplate;
 import com.devhong.free_coupon.model.Partner;
 import com.devhong.free_coupon.type.Category;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TemplateDto {
 
@@ -39,20 +36,6 @@ public class TemplateDto {
                     .description(description)
                     .imgUrl(imgUrl)
                     .build();
-        }
-    }
-
-    @Data
-    @AllArgsConstructor
-    public static class Response {
-        private String status;
-        private String message;
-        private List<?> data;
-
-        public Response(String status, String message){
-            this.status = status;
-            this.message = message;
-            this.data = new ArrayList<>();
         }
     }
 

@@ -1,6 +1,8 @@
 package com.devhong.free_coupon.controller;
 
+import com.devhong.free_coupon.dto.BaseResponseDto;
 import com.devhong.free_coupon.service.UserService;
+import com.devhong.free_coupon.type.ResponseMsg;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,6 @@ public class UserController {
     public ResponseEntity<?> participateFeed(@PathVariable Long feed_id,
                                              @RequestHeader("Authorization") String jwtHeader) {
         userService.participateFeed(jwtHeader, feed_id);
-        return ResponseEntity.ok("success");
+        return ResponseEntity.ok(new BaseResponseDto.BaseResponse("success", ResponseMsg.PARTICIPATE_FEED_SUCCESS.getMessage()));
     }
 }
