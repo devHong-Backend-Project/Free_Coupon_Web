@@ -22,4 +22,4 @@ spring:
     token-prefix: "Bearer "
 
 qr-api: https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=
-qr-server: http://127.0.0.1:8080/partner/check-coupon/
+qr-server: http://127.0.0.1:8080/partner/use-coupon/

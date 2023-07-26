@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,6 +87,7 @@ public class PartnerService {
         1. 템플릿 유무 체크
         2. validateTemplate : 해당 유저가 생성한 템플릿이 맞는지 확인
      */
+    @Transactional
     public CouponFeed registerCoupon(String header, Long templateId, Integer amount) {
         CouponTemplate couponTemplate = couponTemplateRepository.findById(templateId)
                 .orElseThrow(()->new CustomException(CustomErrorCode.TEMPLATE_NOT_FOUND));
@@ -95,8 +97,11 @@ public class PartnerService {
         return couponFeedRepository.save(couponTemplate.toFeedEntity(amount));
     }
 
-    public QrCouponDto.QrCouponInfo checkQrCoupon(String header, String uuid, Long partnerId) {
+    @Transactional
+    public QrCouponDto.QrCouponInfo useQrCoupon(String header, String uuid, Long partnerId) {
         QrCoupon qrCoupon = validateQrCoupon(header, uuid, partnerId);
+
+        qrCoupon.useCoupon();
 
         return QrCouponDto.QrCouponInfo.fromEntity(qrCoupon);
     }
@@ -112,6 +117,10 @@ public class PartnerService {
 
         if (qrCoupon.is_used()) {
             throw new CustomException(CustomErrorCode.COUPON_ALREADY_USED);
+        }
+
+        if (LocalDate.now().isAfter(qrCoupon.getExpired_date())) {
+            throw new CustomException((CustomErrorCode.COUPON_EXPIRED));
         }
 
         return qrCoupon;

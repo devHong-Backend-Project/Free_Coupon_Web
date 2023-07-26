@@ -95,15 +95,15 @@ public class PartnerController {
     }
 
     /*
-        Qr쿠폰 확인하기
+        Qr쿠폰 사용처리하기
         - Qr코드를 스캔하면 Qr코드안에 삽입했던 url로 접속-> checkQrCoupon api 실행
-        - 자신이 발급한 쿠폰이 맞는지, 이미 사용한 쿠폰인지 확인.
+        - 자신이 발급한 쿠폰이 맞는지, 이미 사용한 쿠폰인지 확인, 유효기간 확인
      */
-    @GetMapping("/check-coupon/{uuid}/{partner_id}")
-    public ResponseEntity<?> checkQrCoupon(@PathVariable String uuid, @PathVariable Long partner_id, @RequestHeader("Authorization") String jwtHeader) {
-        QrCouponDto.QrCouponInfo qrCouponInfo = partnerService.checkQrCoupon(jwtHeader, uuid, partner_id);
+    @PutMapping("/use-coupon/{uuid}/{partner_id}")
+    public ResponseEntity<?> useQrCoupon(@PathVariable String uuid, @PathVariable Long partner_id, @RequestHeader("Authorization") String jwtHeader) {
+        QrCouponDto.QrCouponInfo qrCouponInfo = partnerService.useQrCoupon(jwtHeader, uuid, partner_id);
 
-        return ResponseEntity.ok(new BaseResponseDto.DataResponse("success", ResponseMsg.READ_COUPON_INFO.getMessage(), new ArrayList<>(Arrays.asList(qrCouponInfo))));
+        return ResponseEntity.ok(new BaseResponseDto.DataResponse("success", ResponseMsg.USE_COUPON_SUCCESS.getMessage(), new ArrayList<>(Arrays.asList(qrCouponInfo))));
     }
 
 }

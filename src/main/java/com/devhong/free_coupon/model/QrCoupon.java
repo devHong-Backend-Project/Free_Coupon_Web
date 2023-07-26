@@ -36,4 +36,7 @@ public class QrCoupon extends BaseEntity {
 
     private boolean is_used = false;
 
+    public void useCoupon() {
+        this.is_used = true;
+    }
 }

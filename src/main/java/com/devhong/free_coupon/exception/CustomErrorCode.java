@@ -26,7 +26,8 @@ public enum CustomErrorCode {
     FEED_NOT_FOUND(HttpStatus.BAD_REQUEST, "쿠폰 정보를 찾을 수 없습니다."),
     NOT_PARTNERS_COUPON(HttpStatus.BAD_REQUEST, "회원님이 발급한 쿠폰이 아닙니다."),
     COUPON_NOT_FOUND(HttpStatus.BAD_REQUEST, "쿠폰정보를 찾을 수 없습니다."),
-    COUPON_ALREADY_USED(HttpStatus.BAD_REQUEST, "이미 사용처리된 쿠폰입니다.");
+    COUPON_ALREADY_USED(HttpStatus.BAD_REQUEST, "이미 사용처리된 쿠폰입니다."),
+    COUPON_EXPIRED(HttpStatus.BAD_REQUEST, "유효기간이 지난 쿠폰입니다.");
 
     private final HttpStatus httpStatus;
     private final String errorMessage;
