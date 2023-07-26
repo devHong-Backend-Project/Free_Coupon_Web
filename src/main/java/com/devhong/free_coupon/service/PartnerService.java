@@ -77,6 +77,11 @@ public class PartnerService {
         return templates.stream().map(TemplateDto.TemplateResponse::fromEntity).collect(Collectors.toList());
     }
 
+    /*
+        쿠폰 등록하기
+        1. 템플릿 유무 체크
+        2. validateTemplate : 해당 유저가 생성한 템플릿이 맞는지 확인
+     */
     public CouponFeed registerCoupon(String header, Long templateId, Integer amount) {
         CouponTemplate couponTemplate = couponTemplateRepository.findById(templateId)
                 .orElseThrow(()->new CustomException(CustomErrorCode.TEMPLATE_NOT_FOUND));

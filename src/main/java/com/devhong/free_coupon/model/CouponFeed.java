@@ -9,6 +9,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(indexes = @Index(name = "amount_idx", columnList = "amount"))
 public class CouponFeed extends BaseEntity {
 
     @Id
@@ -32,4 +33,12 @@ public class CouponFeed extends BaseEntity {
     private String imgUrl;
 
     private Integer amount;
+
+    public void useCouponAmount(Integer amount) {
+        if (this.amount >= amount) {
+            this.amount -= amount;
+        }else{
+            this.amount = 0;
+        }
+    }
 }
