@@ -3,7 +3,7 @@ package com.devhong.free_coupon.scheduler;
 import com.devhong.free_coupon.model.CouponFeed;
 import com.devhong.free_coupon.model.QrCoupon;
 import com.devhong.free_coupon.repository.CouponFeedRepository;
-import com.devhong.free_coupon.repository.FeedParticipantsRepository;
+import com.devhong.free_coupon.repository.FeedParticipantRepository;
 import com.devhong.free_coupon.repository.QrCouponRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.*;
 public class LotteryScheduler {
 
     private final CouponFeedRepository couponFeedRepository;
-    private final FeedParticipantsRepository feedParticipantsRepository;
+    private final FeedParticipantRepository feedParticipantsRepository;
     private final QrCouponRepository qrCouponRepository;
 
     @Value("${qr-api}")

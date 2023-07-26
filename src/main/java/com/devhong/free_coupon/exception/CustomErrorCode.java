@@ -23,7 +23,10 @@ public enum CustomErrorCode {
     TEMPLATE_NOT_FOUND(HttpStatus.BAD_REQUEST, "존재하지않는 템플릿 입니다."),
     USER_TEMPLATE_NOT_MATCH(HttpStatus.BAD_REQUEST, "회원님이 생성하신 템플릿이 아닙니다."),
     NO_TICKETS_AVAILABLE(HttpStatus.BAD_REQUEST, "티켓 개수가 부족합니다."),
-    FEED_NOT_FOUND(HttpStatus.BAD_REQUEST, "쿠폰 정보를 찾을 수 없습니다.");
+    FEED_NOT_FOUND(HttpStatus.BAD_REQUEST, "쿠폰 정보를 찾을 수 없습니다."),
+    NOT_PARTNERS_COUPON(HttpStatus.BAD_REQUEST, "회원님이 발급한 쿠폰이 아닙니다."),
+    COUPON_NOT_FOUND(HttpStatus.BAD_REQUEST, "쿠폰정보를 찾을 수 없습니다."),
+    COUPON_ALREADY_USED(HttpStatus.BAD_REQUEST, "이미 사용처리된 쿠폰입니다.");
 
     private final HttpStatus httpStatus;
     private final String errorMessage;
