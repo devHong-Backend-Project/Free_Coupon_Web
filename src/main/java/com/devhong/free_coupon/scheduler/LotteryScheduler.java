@@ -14,10 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -58,7 +55,7 @@ public class LotteryScheduler {
         List<Long> winners = shufflePicking(participants, feed.getAmount());
 
         winners.forEach(userId -> {
-            String uuid = UUID.randomUUID().toString();
+            String uuid = getCustomUUID();
             String qr_url = qrApi + qrServer + uuid + "/" + feed.getPartnerId();
 
             qrCouponRepository.save(QrCoupon.builder()
@@ -73,6 +70,12 @@ public class LotteryScheduler {
 
         feed.useCouponAmount(winners.size());
         couponFeedRepository.save(feed);
+    }
+
+    private String getCustomUUID() {
+        String uuid = UUID.randomUUID().toString();
+        List<String> split = Arrays.asList(uuid.split("-"));
+        return String.join("",split);
     }
 
     public List<Long> shufflePicking(List<Long> list, Integer n) {

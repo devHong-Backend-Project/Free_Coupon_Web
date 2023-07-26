@@ -12,13 +12,13 @@ import java.util.Optional;
 
 @Repository
 public interface PartnerRepository extends JpaRepository<Partner, Long> {
-    Optional<Partner> findByName(@Param("name") String name);
+    Optional<Partner> findByNickname(String nickname);
 
-    Optional<Partner> findById(@Param("id") Long id);
+    Optional<Partner> findById(Long id);
 
     @Query("SELECT p.templates FROM Partner p WHERE p.id = :partnerId")
     List<CouponTemplate> findTemplatesByPartnerId(@Param("partnerId") Long partnerId);
 
-    boolean existsByNameOrBusinessNumber(String name, String businessNumber);
+    boolean existsByNicknameOrBusinessNumber(String name, String businessNumber);
 
 }

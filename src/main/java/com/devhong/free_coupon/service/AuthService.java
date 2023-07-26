@@ -36,7 +36,7 @@ public class AuthService implements UserDetailsService {
         4. SignUpDto 객체를 Entity객체로 변환 후 DB에 저장(회원가입 완료)
      */
     public User register(Auth.SignUpUser request) {
-        if (userRepository.existsByNameOrMobileNumber(request.getName(), request.getMobileNumber())) {
+        if (userRepository.existsByNicknameOrMobileNumber(request.getNickname(), request.getMobileNumber())) {
             throw new CustomException(CustomErrorCode.NAME_OR_MOBILE_NUMBER_ALREADY_EXISTS);
         }
 
@@ -45,7 +45,7 @@ public class AuthService implements UserDetailsService {
     }
 
     public Partner register(Auth.SignUpPartner request) {
-        if (partnerRepository.existsByNameOrBusinessNumber(request.getName(), request.getBusinessNumber())) {
+        if (partnerRepository.existsByNicknameOrBusinessNumber(request.getNickname(), request.getBusinessNumber())) {
             throw new CustomException(CustomErrorCode.NAME_OR_BUSINESS_NUMBER_ALREADY_EXISTS);
         }
 
@@ -64,10 +64,10 @@ public class AuthService implements UserDetailsService {
         Client client;
 
         if (request.getUserType().equals("user")){
-            client = userRepository.findByName(request.getName())
+            client = userRepository.findByNickname(request.getNickname())
                     .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         }else{
-            client = partnerRepository.findByName(request.getName())
+            client = partnerRepository.findByNickname(request.getNickname())
                     .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         }
 
@@ -88,10 +88,10 @@ public class AuthService implements UserDetailsService {
         String clientType = client.split("_")[1];
 
         if (clientType.equals("user")){
-            return userRepository.findByName(clientName)
+            return userRepository.findByNickname(clientName)
                     .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         }else{
-            return partnerRepository.findByName(clientName)
+            return partnerRepository.findByNickname(clientName)
                     .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         }
     }

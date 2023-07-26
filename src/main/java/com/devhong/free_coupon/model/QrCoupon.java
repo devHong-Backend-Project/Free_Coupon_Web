@@ -12,6 +12,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(indexes = {
+        @Index(name = "uuid_idx", columnList = "uuid"),
         @Index(name = "partner_idx", columnList = "partnerId"),
         @Index(name = "user_idx", columnList = "userId")})
 public class QrCoupon extends BaseEntity {
@@ -20,6 +21,7 @@ public class QrCoupon extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 50)
     private String uuid;
 
     private Long partnerId;

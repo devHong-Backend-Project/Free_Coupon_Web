@@ -26,7 +26,7 @@ public class Partner extends BaseEntity implements UserDetails, Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String nickname;
 
     private String password;
 
@@ -50,7 +50,7 @@ public class Partner extends BaseEntity implements UserDetails, Client {
 
     @Override
     public String getUsername() {
-        return this.name;
+        return this.nickname;
     }
 
     @Override

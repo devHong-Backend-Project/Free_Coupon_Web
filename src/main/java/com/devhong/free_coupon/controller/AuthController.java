@@ -38,14 +38,14 @@ public class AuthController {
     @PostMapping("/signup/user")
     public ResponseEntity<?> singUpUser(@RequestBody @Valid Auth.SignUpUser request){
         User user = authService.register(request);
-        log.info("user signup -> " + user.getName());
+        log.info("user signup -> " + user.getNickname());
         return ResponseEntity.ok(new Auth.SignUpResponse("success",ResponseMsg.SIGNUP_SUCCESS.getMessage()));
     }
 
     @PostMapping("/signup/partner")
     public ResponseEntity<?> singUpPartner(@RequestBody @Valid Auth.SignUpPartner request){
         Partner partner = authService.register(request);
-        log.info("partner signup -> " + partner.getName());
+        log.info("partner signup -> " + partner.getNickname());
         return ResponseEntity.ok(new Auth.SignUpResponse("success",ResponseMsg.SIGNUP_SUCCESS.getMessage()));
     }
 
@@ -59,8 +59,8 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> signIn(@RequestBody @Valid Auth.SignIn request) {
         Client client = authService.authenticate(request);
-        String token = tokenProvider.generateToken(client.getId(), client.getName(), request.getUserType());
-        log.info("user login -> " + client.getName());
+        String token = tokenProvider.generateToken(client.getId(), client.getNickname(), request.getUserType());
+        log.info("user login -> " + client.getNickname());
         return ResponseEntity.ok(new Auth.SignInResponse("success",ResponseMsg.SIGNIN_SUCCESS.getMessage(), token));
     }
 

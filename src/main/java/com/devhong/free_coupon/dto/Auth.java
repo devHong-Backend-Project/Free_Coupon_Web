@@ -14,7 +14,7 @@ public class Auth {
     @Data
     public static class SignIn {
         @NotBlank
-        private String name;
+        private String nickname;
         @NotBlank
         private String password;
         @NotBlank
@@ -35,7 +35,7 @@ public class Auth {
     @Data
     public static class SignUpUser {
         @NotBlank
-        private String name;
+        private String nickname;
         @NotBlank
         private String password;
         @NotBlank
@@ -45,7 +45,7 @@ public class Auth {
 
         public User toEntity() {
                 return User.builder()
-                        .name(name)
+                        .nickname(nickname)
                         .password(password)
                         .email(email)
                         .mobileNumber(mobileNumber)
@@ -59,7 +59,7 @@ public class Auth {
     @Data
     public static class SignUpPartner {
         @NotBlank
-        private String name;
+        private String nickname;
         @NotBlank
         private String password;
         @NotBlank
@@ -69,7 +69,7 @@ public class Auth {
 
         public Partner toEntity() {
             return Partner.builder()
-                    .name(name)
+                    .nickname(nickname)
                     .password(password)
                     .businessNumber(businessNumber)
                     .location(location)
