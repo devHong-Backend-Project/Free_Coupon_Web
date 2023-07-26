@@ -2,10 +2,10 @@ package com.devhong.free_coupon.service;
 
 import com.devhong.free_coupon.exception.CustomErrorCode;
 import com.devhong.free_coupon.exception.CustomException;
-import com.devhong.free_coupon.model.FeedParticipants;
+import com.devhong.free_coupon.model.FeedParticipant;
 import com.devhong.free_coupon.model.User;
 import com.devhong.free_coupon.repository.CouponFeedRepository;
-import com.devhong.free_coupon.repository.FeedParticipantsRepository;
+import com.devhong.free_coupon.repository.FeedParticipantRepository;
 import com.devhong.free_coupon.repository.UserRepository;
 import com.devhong.free_coupon.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final FeedParticipantsRepository feedParticipantsRepository;
+    private final FeedParticipantRepository feedParticipantRepository;
 
     private final TokenProvider tokenProvider;
     private final CouponFeedRepository couponFeedRepository;
@@ -35,7 +35,7 @@ public class UserService {
 
         User user = validateParticipation(feedId, userId);
 
-        feedParticipantsRepository.save(FeedParticipants.builder()
+        feedParticipantRepository.save(FeedParticipant.builder()
                         .userId(userId)
                         .feedId(feedId)
                 .build());
