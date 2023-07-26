@@ -1,6 +1,9 @@
 package com.devhong.free_coupon.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import lombok.*;
 
@@ -10,8 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(indexes = @Index(name = "feed_idx", columnList = "feedId"))
-public class FeedParticipants {
+public class FeedParticipant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
