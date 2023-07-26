@@ -57,10 +57,10 @@ public class LotteryScheduler {
 
         List<Long> winners = shufflePicking(participants, feed.getAmount());
 
-        String uuid = UUID.randomUUID().toString();
-        String qr_url = qrApi + qrServer + uuid + "/" + feed.getPartnerId();
-
         winners.forEach(userId -> {
+            String uuid = UUID.randomUUID().toString();
+            String qr_url = qrApi + qrServer + uuid + "/" + feed.getPartnerId();
+
             qrCouponRepository.save(QrCoupon.builder()
                     .partnerId(feed.getPartnerId())
                     .uuid(uuid)
