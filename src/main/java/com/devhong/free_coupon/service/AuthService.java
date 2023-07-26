@@ -31,17 +31,13 @@ public class AuthService implements UserDetailsService {
         회원 등록
         - register 메소드 오버로딩
         1. client가 요청보낸 회원가입 정보를 가져와서 이미 가입된 name인지 확인
-        2. 이미 있는 name이면 예외발생
-        3. 없으면 비밀번호는 암호화 처리 후 setPassword
+        2. 이미 있는 name이면 예외발생, mobileNumber도 중복체크
+        3. 중복이 없으면 비밀번호는 암호화 처리 후 setPassword
         4. SignUpDto 객체를 Entity객체로 변환 후 DB에 저장(회원가입 완료)
      */
     public User register(Auth.SignUpUser request) {
-        if (userRepository.existsByName(request.getName())) {
-            throw new CustomException(CustomErrorCode.USER_ALREADY_EXISTS);
-        }
-
-        if (userRepository.existsByMobileNumber(request.getMobileNumber())) {
-            throw new CustomException(CustomErrorCode.MOBILE_NUMBER_ALREADY_EXISTS);
+        if (userRepository.existsByNameOrMobileNumber(request.getName(), request.getMobileNumber())) {
+            throw new CustomException(CustomErrorCode.NAME_OR_MOBILE_NUMBER_ALREADY_EXISTS);
         }
 
         request.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -49,12 +45,8 @@ public class AuthService implements UserDetailsService {
     }
 
     public Partner register(Auth.SignUpPartner request) {
-        if (partnerRepository.existsByName(request.getName())) {
-            throw new CustomException(CustomErrorCode.USER_ALREADY_EXISTS);
-        }
-
-        if (partnerRepository.existsByBusinessNumber(request.getBusinessNumber())) {
-            throw new CustomException(CustomErrorCode.BUSINESS_NUMBER_ALREADY_EXISTS);
+        if (partnerRepository.existsByNameOrBusinessNumber(request.getName(), request.getBusinessNumber())) {
+            throw new CustomException(CustomErrorCode.NAME_OR_BUSINESS_NUMBER_ALREADY_EXISTS);
         }
 
         request.setPassword(passwordEncoder.encode(request.getPassword()));

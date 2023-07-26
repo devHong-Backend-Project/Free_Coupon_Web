@@ -1,6 +1,7 @@
 package com.devhong.free_coupon.controller;
 
 import com.devhong.free_coupon.dto.TemplateDto;
+import com.devhong.free_coupon.model.CouponFeed;
 import com.devhong.free_coupon.model.CouponTemplate;
 import com.devhong.free_coupon.model.Partner;
 import com.devhong.free_coupon.service.PartnerService;
@@ -12,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,25 +27,29 @@ public class PartnerController {
     /*
         쿠폰 템플릿 추가하기
      */
-    @PostMapping("/template/create")
+    @PostMapping("/template")
     public ResponseEntity<?> addTemplate(@RequestBody @Valid TemplateDto.Request request,
-                                         @RequestHeader("Authorization") String token) {
-        CouponTemplate couponTemplate = partnerService.addTemplate(request, token);
+                                         @RequestHeader("Authorization") String jwtHeader) {
+        CouponTemplate couponTemplate = partnerService.addTemplate(request, jwtHeader);
 
-        log.info("partner_id " + couponTemplate.getId().toString() + " : Add Template");
+        log.info(String.format("partner_id_%d add template",
+                couponTemplate.getPartner().getId()));
         return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.ADD_TEMPLATE_SUCCESS.getMessage()));
     }
 
 
     /*
         쿠폰 템플릿 수정하기
+        - 클라이언트로부터 template_id 와 수정할 template 정보를 입력받아 업데이트 수행
      */
-    @PostMapping("/template/update/{template_id}")
+    @PutMapping("/template/{template_id}")
     public ResponseEntity<?> updateTemplate(@RequestBody @Valid TemplateDto.Request request,
-                                            @PathVariable Long template_id){
-        CouponTemplate couponTemplate = partnerService.updateTemplate(template_id, request);
+                                            @PathVariable Long template_id,
+                                            @RequestHeader("Authorization") String jwtHeader){
+        CouponTemplate couponTemplate = partnerService.updateTemplate(jwtHeader, template_id, request);
 
-        log.info("partner_id " + couponTemplate.getId().toString() + " : Update Template");
+        log.info(String.format("partner_id_%d update template",
+                couponTemplate.getPartner().getId()));
         return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.UPDATE_TEMPLATE_SUCCESS.getMessage()));
     }
 
@@ -51,11 +57,37 @@ public class PartnerController {
     /*
         쿠폰 템플릿 삭제하기
      */
-    @PostMapping("/template/delete/{template_id}")
-    public ResponseEntity<?> deleteTemplate(@PathVariable Long template_id) {
-        Partner partner = partnerService.deleteTemplate(template_id);
+    @DeleteMapping("/template/{template_id}")
+    public ResponseEntity<?> deleteTemplate(@PathVariable Long template_id,
+                                            @RequestHeader("Authorization") String jwtHeader) {
+        Partner partner = partnerService.deleteTemplate(jwtHeader, template_id);
 
-        log.info("partner_id " + partner.getId().toString() + " : Delete Template");
+        log.info(String.format("partner_id_%d delete template",
+                partner.getId()));
         return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.DELETE_TEMPLATE_SUCCESS.getMessage()));
     }
+
+
+    /*
+        쿠폰 템플릿 목록 보기
+        - 헤더에 있는 jwt 토큰을 가져와서 해당 유저가 만든 쿠폰 템플릿 목록을 보여준다.
+     */
+    @GetMapping("/template/list")
+    public ResponseEntity<?> getTemplates(@RequestHeader("Authorization") String jwtHeader) {
+        List<TemplateDto.TemplateResponse> templates = partnerService.getTemplates(jwtHeader);
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.GET_TEMPLATE_LIST.getMessage(), templates));
+    }
+
+
+    /*
+        쿠폰 등록하기
+     */
+    @PostMapping("/register-coupon/{template_id}")
+    public ResponseEntity<?> registerCoupon(@PathVariable Long template_id ,@RequestParam("amount") Integer amount, @RequestHeader("Authorization") String jwtHeader) {
+        CouponFeed couponFeed = partnerService.registerCoupon(jwtHeader, template_id, amount);
+        log.info(String.format("partner_id_%d register coupon(feed_id_%d)",
+                couponFeed.getPartnerId(), couponFeed.getId()));
+        return ResponseEntity.ok(new TemplateDto.Response("success", ResponseMsg.REGISTER_COUPON_SUCCESS.getMessage()));
+    }
+
 }
