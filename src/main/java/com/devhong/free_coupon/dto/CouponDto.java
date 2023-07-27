@@ -1,8 +1,10 @@
 package com.devhong.free_coupon.dto;
 
 import com.devhong.free_coupon.model.CouponFeed;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
@@ -15,6 +17,8 @@ public class CouponDto {
     }
 
     @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     @Builder
     public static class CouponInfo{
         private String category;

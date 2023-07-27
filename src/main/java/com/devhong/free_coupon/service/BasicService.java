@@ -6,6 +6,7 @@ import com.devhong.free_coupon.repository.CouponFeedRepository;
 import com.devhong.free_coupon.repository.FeedParticipantRepository;
 import com.devhong.free_coupon.type.Category;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class BasicService {
     private final CouponFeedRepository couponFeedRepository;
     private final FeedParticipantRepository feedParticipantRepository;
 
+    @Cacheable(key = "#category.category", value = "category")
     public List<CouponDto.CouponInfo> getCouponListByCategory(CouponDto.CategoryRequest category) {
         List<CouponFeed> couponFeedList = couponFeedRepository.findByAmountGreaterThanAndCategory(0,Category.fromString(category.getCategory()));
 
