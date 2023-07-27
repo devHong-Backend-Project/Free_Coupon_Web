@@ -9,7 +9,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(indexes = @Index(name = "amount_idx", columnList = "amount"))
+@Table(indexes = {
+        @Index(name = "amount_idx", columnList = "amount"),
+        @Index(name = "category_idx", columnList = "category")})
 public class CouponFeed extends BaseEntity {
 
     @Id
@@ -19,6 +21,7 @@ public class CouponFeed extends BaseEntity {
     private Long partnerId;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private Category category;
 
     private String couponName;

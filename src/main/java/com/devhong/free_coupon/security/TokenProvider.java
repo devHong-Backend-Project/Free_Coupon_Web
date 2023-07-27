@@ -17,7 +17,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TokenProvider {
 
-    private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 2; // 2 hour
+    private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24; // 24 hour
 
     private final AuthService authService;
 
