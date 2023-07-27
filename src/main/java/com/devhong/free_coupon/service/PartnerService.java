@@ -31,6 +31,7 @@ public class PartnerService {
     private final QrCouponRepository qrCouponRepository;
     private final TokenProvider tokenProvider;
 
+    @Transactional
     public CouponTemplate addTemplate(TemplateDto.Request request, String header) {
         Long userId = tokenProvider.getUserIdFromHeader(header);
         Partner partner = partnerRepository.findById(userId)

@@ -35,6 +35,7 @@ public class AuthService implements UserDetailsService {
         3. 중복이 없으면 비밀번호는 암호화 처리 후 setPassword
         4. SignUpDto 객체를 Entity객체로 변환 후 DB에 저장(회원가입 완료)
      */
+    @Transactional
     public User register(Auth.SignUpUser request) {
         if (userRepository.existsByNicknameOrMobileNumber(request.getNickname(), request.getMobileNumber())) {
             throw new CustomException(CustomErrorCode.NAME_OR_MOBILE_NUMBER_ALREADY_EXISTS);
@@ -44,6 +45,7 @@ public class AuthService implements UserDetailsService {
         return userRepository.save(request.toEntity());
     }
 
+    @Transactional
     public Partner register(Auth.SignUpPartner request) {
         if (partnerRepository.existsByNicknameOrBusinessNumber(request.getNickname(), request.getBusinessNumber())) {
             throw new CustomException(CustomErrorCode.NAME_OR_BUSINESS_NUMBER_ALREADY_EXISTS);
