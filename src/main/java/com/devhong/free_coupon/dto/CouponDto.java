@@ -31,6 +31,8 @@ public class CouponDto {
 
         private Integer amount;
 
+        private Long participantCount;
+
         public static CouponInfo fromEntity(CouponFeed couponFeed) {
             return CouponInfo.builder()
                     .category(couponFeed.getCategory().getCategory())

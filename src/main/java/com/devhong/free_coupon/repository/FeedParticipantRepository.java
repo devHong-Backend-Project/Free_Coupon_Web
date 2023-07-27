@@ -12,4 +12,6 @@ import java.util.List;
 public interface FeedParticipantRepository extends JpaRepository<FeedParticipant,Long> {
     @Query("select f.userId from FeedParticipant f where f.feedId = :feedId")
     List<Long> findUserIdByFeedId(@Param("feedId") Long feedId);
+
+    Long countUserIdByFeedId(Long feedId);
 }
