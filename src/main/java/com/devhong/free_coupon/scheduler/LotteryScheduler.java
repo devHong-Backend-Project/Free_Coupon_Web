@@ -32,6 +32,7 @@ public class LotteryScheduler {
     private String qrServer;
 
     @Scheduled(fixedDelay = 600000)
+    @Transactional
     public void lotteryScheduling() {
 
         List<CouponFeed> feeds = couponFeedRepository.findAllByAmountGreaterThan(0);
