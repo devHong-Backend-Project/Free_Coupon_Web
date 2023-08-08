@@ -31,7 +31,7 @@ public class LotteryScheduler {
     @Value("${qr-server}")
     private String qrServer;
 
-    @Scheduled(fixedDelay = 600000)
+    @Scheduled(cron = "* * 0 * * *")
     @Transactional
     public void lotteryScheduling() {
 
